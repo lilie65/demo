@@ -1,11 +1,7 @@
 package com.example.demo.mapper;
 
-import com.example.demo.Service.modele.LignePanierDTO;
-import com.example.demo.Service.modele.PanierDTO;
-import com.example.demo.Service.modele.UtilisateurDTO;
-import com.example.demo.repository.entity.LignePanier;
-import com.example.demo.repository.entity.Panier;
-import com.example.demo.repository.entity.Utilisateur;
+import com.example.demo.Service.modele.*;
+import com.example.demo.repository.entity.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +22,7 @@ public class UtilisateurMapper {
 
     }
 
-    public UtilisateurDTO UtilisateurToUtilisateurDTO(Utilisateur utilisateur, List<LignePanier> lignePaniersListe) {
+    public UtilisateurDTO UtilisateurToUtilisateurDTO(Utilisateur utilisateur) {
 
         if (utilisateur == null) {
             return null;
@@ -42,7 +38,9 @@ public class UtilisateurMapper {
         utilisateurDTO.setPhoto(utilisateur.getPhoto());
         utilisateurDTO.setEmail(utilisateur.getEmail());
         utilisateurDTO.setPanierDTO(panierToPanierDTO(utilisateur.getPanier()));
-        utilisateurDTO.setLignePanierDTOList(lignePanierDTOS(lignePaniersListe));
+        utilisateurDTO.setCommandeListDTO(commandeDTOList(utilisateur.getCommandeList()));
+
+       // utilisateurDTO.setArticleDTOS(articleToArticleListDTO(articleList));
 
         return utilisateurDTO;
     }
@@ -58,6 +56,7 @@ public class UtilisateurMapper {
         panierDTO.setDateAjout(panier.getDateAjout());
         panierDTO.setNombreArticle(panier.getNombreArticle());
         panierDTO.setPrixArticle(panier.getPrixArticle());
+        panierDTO.setLignePanierDTOList(lignePanierDTOS(panier.getLignePanierList()));
         return panierDTO;
     }
 
@@ -73,6 +72,7 @@ public class UtilisateurMapper {
         lignePanierDTO.setPrixTotal(lignePanier.getPrixTotal());
         lignePanierDTO.setDateAjout(lignePanier.getDateAjout());
         lignePanierDTO.setReduction(lignePanier.getReduction());
+        lignePanierDTO.setArticleDTOS(articleToArticleListDTO(lignePanier.getArticleList()));
 
         return lignePanierDTO;
     }
@@ -93,19 +93,90 @@ public class UtilisateurMapper {
     }
 
 
-    List<PanierDTO> panierDTOListToPanierDTO(List<Panier> panierList) {
-        if (panierList == null) {
+    //------------------------------------------------------------------------
+    // Commande
+    //------------------------------------------------------------------------
+    public CommandeDTO commandeToCommandeDTO (Commande commande){
+        if(commande == null){
             return null;
         }
-        List<PanierDTO> list = new ArrayList<>();
-        for (Panier panier : panierList) {
-            PanierDTO panierDTO = panierToPanierDTO(panier);
-            list.add(panierDTO);
+        CommandeDTO commandeDTO = new CommandeDTO();
+        commandeDTO.setIdCommande(commande.getIdCommande());
+        commandeDTO.setDate(commande.getDate());
+        commandeDTO.setDateAchat(commande.getDateAchat());
+        commandeDTO.setPrix(commande.getPrix());
+        commandeDTO.setLigneCommandesDTO(ligneCommandeToCommandeDTOList(commande.getLigneCommandesList()));
+        return commandeDTO;
+    }
+    //------------------------------------------------------------------------
+    //Liste Commande
+    //------------------------------------------------------------------------
+    List<CommandeDTO> commandeDTOList(List<Commande>commandeList){
+        if(commandeList == null){
+            return null;
+        }
+        List<CommandeDTO> dtoList = new ArrayList<>();
+        for (Commande commande : commandeList) {
+            CommandeDTO commandeDTO = commandeToCommandeDTO(commande);
+            dtoList.add(commandeDTO);
 
         }
-        return list;
+        return dtoList;
     }
 
+    //------------------------------------------------------------------------
+    //Liste Ligne Commande
+    //------------------------------------------------------------------------
+    public LigneCommandeDTO ligneCommandeTOLigneCommandeDTO (LigneCommande ligneCommande){
+        if(ligneCommande == null){
+            return null;
+        }
+        LigneCommandeDTO ligneCommandeDTO = new LigneCommandeDTO();
+        ligneCommandeDTO.setIdLigneCommande(ligneCommande.getIdLigneCommande());
+        ligneCommandeDTO.setNombreArticleCommander(ligneCommande.getNombreArticleCommander());
+        ligneCommandeDTO.setPrixTotal(ligneCommande.getPrixTotal());
+        ligneCommandeDTO.setArticleDTO(articleToArticleDTO(ligneCommande.getArticle()));
+
+        return ligneCommandeDTO;
+    }
+
+    List<LigneCommandeDTO> ligneCommandeToCommandeDTOList (List<LigneCommande> ligneListCommande){
+        if(ligneListCommande == null){
+            return null;
+        }
+        List<LigneCommandeDTO> dtoList = new ArrayList<>();
+        for(LigneCommande ligneCommande : ligneListCommande){
+            LigneCommandeDTO ligneCommandeDTO = ligneCommandeTOLigneCommandeDTO(ligneCommande);
+            dtoList.add(ligneCommandeDTO);
+
+        }
+
+        return dtoList;
+    }
+
+    public ArticleDTO articleToArticleDTO(Article article){
+        if(article == null){
+            return null;
+        }
+        ArticleDTO articleDTO= new ArticleDTO();
+        articleDTO.setIdArticle(article.getIdArticle());
+        articleDTO.setNomArticle(article.getNomArticle());
+        articleDTO.setPhotoArticle(article.getPhotoArticle());
+        articleDTO.setNombreArticle(article.getNombreArticle());
+        articleDTO.setPrixArticle(article.getPrixArticle());
+        return articleDTO;
+    }
+    List<ArticleDTO> articleToArticleListDTO (List<Article> articleList){
+        if(articleList == null){
+            return null;
+        }
+        List<ArticleDTO> articleDTOS = new ArrayList<>();
+        for(Article article : articleList){
+            ArticleDTO articleDTO = articleToArticleDTO(article);
+            articleDTOS.add(articleDTO);
+        }
+        return articleDTOS;
+    }
 
 }
 

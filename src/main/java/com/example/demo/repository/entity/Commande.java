@@ -3,7 +3,6 @@ package com.example.demo.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,28 +11,26 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "panier")
-public class Panier {
+@Table(name = "commande")
+public class Commande {
     @Id
-    @Column(name = "id_panier")
+    @Column(name = "id_commande")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idPanier;
+    private Long idCommande;
 
-    @Column(name="date_ajout")
-    private LocalDate dateAjout;
+    @Column(name="date_achat")
+    private LocalDate dateAchat;
 
-    @Column(name = "nombre_article")
-    private int nombreArticle;
-
-    @Column(name = "prix_article")
-    private int prixArticle;
+    private int prix;
+    @Column(name="date_envoie")
+    private LocalDate date;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_utilisateur", referencedColumnName = "id_utilisateur")
     private Utilisateur utilisateur;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_panier", referencedColumnName = "id_panier")
-    private List<LignePanier> lignePanierList;
+    @JoinColumn(name = "id_commande")
+    private List <LigneCommande> ligneCommandesList;
 
 }

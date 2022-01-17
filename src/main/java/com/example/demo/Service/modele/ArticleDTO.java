@@ -1,27 +1,28 @@
 package com.example.demo.Service.modele;
 
-import com.example.demo.repository.entity.Panier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.List;
+
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PanierDTO {
+public class ArticleDTO {
 
-    private Long idPanier;
+    private Long idArticle;
 
-    private LocalDate dateAjout;
-
-    private int nombreArticle;
+    private String nomArticle;
 
     private int prixArticle;
 
-    private List<LignePanierDTO> lignePanierDTOList;
+    private Byte[] photoArticle;
+
+    private int nombreArticle;
+
+
 }

@@ -1,6 +1,6 @@
 package com.example.demo.Service.modele;
 
-import com.example.demo.repository.entity.LignePanier;
+import com.example.demo.repository.entity.LigneCommande;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class UtilisateurDTO {
 
 
@@ -36,5 +35,11 @@ public class UtilisateurDTO {
 
         private PanierDTO panierDTO;
 
-        private  List<LignePanierDTO>lignePanierDTOList;
+
+        private  List<CommandeDTO> commandeListDTO;
+
+
+        private List<ArticleDTO> articleDTOS;
+
+
 }

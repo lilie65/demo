@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,4 +29,8 @@ public class LignePanier {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_panier", referencedColumnName = "id_panier")
     private Panier panier;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_ligne", referencedColumnName = "id_ligne")
+    private List<Article> articleList;
 }

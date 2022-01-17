@@ -42,4 +42,8 @@ public class Utilisateur {
     @OneToOne(mappedBy = "utilisateur", cascade = CascadeType.ALL)
     private Panier panier;
 
+
+    @OneToMany(mappedBy = "utilisateur",cascade = CascadeType.ALL)
+    private List<Commande> commandeList;
+
 }

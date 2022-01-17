@@ -1,6 +1,5 @@
 package com.example.demo.Service.modele;
 
-import com.example.demo.repository.entity.Panier;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,22 +8,19 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LignePanierDTO {
+public class CommandeDTO {
 
-    private Long idLigne;
+    private Long idCommande;
 
-    private int prixTotal;
+    private LocalDate dateAchat;
 
-    private int reduction;
+    private int prix;
 
-    private LocalDate dateAjout;
+    private LocalDate date;
 
-    private List<ArticleDTO> articleDTOS;
-
-
+    private List<LigneCommandeDTO> ligneCommandesDTO;
 }
